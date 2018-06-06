@@ -1,56 +1,82 @@
 <!DOCTYPE html>
-<html ng-app = "myApp">
+<html ng-app="myApp">
+
 <head>
     <title>Shopping Cart</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js">     </script>
-    <script src = "cart.js"></script>        
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js">
+    </script>
+    <script src="cart.js"></script>
 </head>
-<body style="    width: 40%;margin-left: 31%;border:2px solid black " ng-controller = "myShoppingCart">
 
-       <table class="table table-striped" >
-    <thead>
-      <tr>
-        <th>Item name</th>
-        <th>price</th>
-        <th>selection
-        <span class="glyphicon glyphicon glyphicon-arrow-up" ng-click="sortAscinding()"></span>
-        <span class="glyphicon glyphicon glyphicon-arrow-down" ng-click="sortDescending()"></span></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="items in itemname">
-        <td>{{items.name}}</td>
-        <td>{{items.price}}</td>
-        <td><input type="checkbox" name="checkbox" ng-model="selection" ng-click="addselecteditem(items, selection)">
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <input type="button" class="btn btn-success" name="" value="Calculate bill" ng-click="calculatebill()">
-  <table class="table table-striped" >
-    <thead>
-      <tr>
-        <th>Item name</th>
-        <th>price</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="items in selecteditem | orderBy: 'price'">
-        <td>{{items.name}}</td>
-        <td>{{items.price}}</td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="form-group">
-          <label>Total Bill:</label>
-          <input type="text" class="form-control"  ng-model="totalbill">
+<body style="    width: 40%;margin-left: 31%;border:2px solid black " ng-controller="myShoppingCart">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Item name</th>
+                <th>price</th>
+                <th>selection
+                    <span class="glyphicon glyphicon glyphicon-arrow-up" ng-click="sortAscinding()"></span>
+                    <span class="glyphicon glyphicon glyphicon-arrow-down" ng-click="sortDescending()"></span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="items in itemname">
+                <td>{{items.name}}</td>
+                <td>{{items.price}}</td>
+                <td>
+                    <input type="checkbox" name="checkbox" ng-model="selection" ng-click="addselecteditem(items, selection)">
+                    <span style="margin-left: 10px;" class="glyphicon glyphicon glyphicon-remove-sign" ng-click="removeItem(items)"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <input type="button" class="btn btn-success" name="" value="Calculate bill" ng-click="calculatebill()">
+    <input type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" name="" value="Add Item" ng-click="openModal()">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Item name</th>
+                <th>price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="items in selecteditem | orderBy: 'price'">
+                <td>{{items.name}}</td>
+                <td>{{items.price}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="form-group">
+        <label>Total Bill:</label>
+        <input type="text" class="form-control" ng-model="totalbill">
+    </div>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body">
+                    <form name="itemAddForm">
+                        <input type="text" class="form-control" name="" ng-model="newItem.name" placeholder="Enter item name" required>
+                        <input type="text" style="margin-top: 10px" class="form-control" name="" ng-model="newItem.price" placeholder="Enter item prime" required>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal" ng-disabled="itemAddForm.$invalid" ng-click="addItem(newItem)">Add Item</button>
+                </div>
+            </div>
         </div>
-        
-
+    </div>
 </body>
+
 </html>
-  </body>
-  </html>
+</body>
+
+</html>
